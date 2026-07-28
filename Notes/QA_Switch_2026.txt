@@ -1,0 +1,239 @@
+Senior Automation QA Engineer (Python | Selenium | Playwright | API | SQL | CI/CD)
+
+Core Automation
+Python
+Selenium
+Playwright
+PyTest
+Page Object Model
+Framework design
+Logging
+Reporting
+Parallel execution
+
+API
+REST APIs
+Authentication
+JSON
+Requests library
+Postman
+API automation
+
+SQL
+Joins
+Window Functions
+CTEs
+Stored Procedures (concepts)
+Query optimization basics
+
+DevOps Basics
+Git
+GitHub
+Jenkins
+Docker
+CI/CD pipelines
+
+AI in Testing
+
+This is increasingly important. We'll learn:
+
+Using AI to generate test cases
+AI-assisted automation
+Prompting techniques for QA
+Where AI helps—and where manual validation is still needed
+
+Interview Readiness
+
+You'll be prepared for questions like:
+
+Explain your automation framework.
+Why Playwright over Selenium?
+How do you reduce flaky tests?
+Describe your CI/CD integration.
+What happens when an API returns HTTP 500?
+Explain your synchronization strategy.
+Design a framework from scratch.
+
+The goal isn't memorizing answers—it's understanding the concepts so you can respond naturally.
+
+
+
+Day 1: Python Fundamentals for Automation Engineers + Interview Mindset + Baseline Assessment.
+
+Question 1 →  Start from Tell me About yourself
+
+
+Good morning, and thank you for the opportunity.
+My name is Parveen Kumar, and I have 10 years of experience in Software Testing, with strong expertise in Automation Testing using Python, Selenium, PyTest, API Testing, and SQL.
+Currently, I'm working as a Senior Test Engineer at Tech Mahindra for AT&T, where I lead quality assurance activities across four enterprise applications. My responsibilities include automation development, regression testing, release validation, stakeholder communication, and supporting architecture migration initiatives.
+Over the years, I've designed and maintained more than 2,000 test scenarios, contributed to automation improvements, collaborated closely with developers and product owners, and participated in CI/CD-based release processes using Git and Jenkins.
+I enjoy solving quality challenges, improving automation coverage, and working with cross-functional teams.
+I'm now looking for an opportunity where I can contribute to larger automation initiatives, continue growing technically, and take on greater ownership within a high-performing engineering team.
+
+Question 2 →  Explain the difference between LIST, TUPLE, SET & DICTIONARY
+
+A List is an ordered, mutable collection that allows duplicate values. It is used when the data needs to be modified dynamically.
+
+fruits = ["Apple", "Banana", "Orange"]
+
+fruits.append("Mango")
+fruits[1] = "Grapes"
+fruits.remove("Apple")
+
+A Tuple is an ordered, immutable collection that allows duplicate values. It is commonly used for fixed data that should not change.
+
+browser = ("Chrome", "120")
+
+A set is unordered, mutable collection that don't allows duplicate values. Set has unique values only.
+
+Home
+Products
+Offers
+Home
+
+set(menu_names)  // This is a practical QA use case.
+
+A DICTIONARY is an ordered, mutable collection that allows duplicate values ( Key should be unique but values can be duplicate). It is commonly used for data structures in automation.
+
+login_data = {
+    "username": "admin",
+    "password": "Admin123"
+}
+
+Or:
+
+expected_response = {
+    "status": "SUCCESS",
+    "code": 200
+}
+
+Which data structure do you use the most in Selenium?
+
+"In my automation projects, I mostly use lists and dictionaries. Lists are useful for handling collections of WebElements or test data, while dictionaries are very helpful for storing configuration values, test data, and validating API responses. Sets are useful when checking uniqueness, and tuples are suitable for fixed data."
+
+I want you to explain:
+
+What is each one?
+Difference between them.
+Which one is mutable?
+Which one is fastest?
+Where have you actually used them in Selenium automation?
+
+
+Question 3 → "What happens internally when Selenium executes this line?" driver.find_element(By.ID, "username").click() 
+
+Senior QA Automation Engineer , I should explain how it works internally, not like 4 yrs of tester. 
+
+Step → 1, When Python executes this method, nothing happened in the browser yet.
+Step → 2, For executing this method, we need a selenium client library that sends requests to the browser. The request follows the W3C webdriver protocol.
+Step → 3, When Selenium sends the request directly to the browser , it can’t send it directly. For that we have to add, chromedriver for chrome, firefox driver for mozilla, Gheckdriver for edge.
+Step → 4,  Browser driver receives the HTTP request, translates it to the commands that chrome browser understands.  Python → ChromeDriver → ChromeBrowser.
+Step → 5, Browser searches the DOM, if it finds the element.
+Step → 6, Element ID is returned, Chromedriver sends back the reference to selenium, selenium stores the reference.
+Step → 7, Now, selenium sends another request, .CLICK() which means, click the element.
+
+→ Why do we need ChromeDriver? 
+
+"Browsers don't understand Selenium commands directly. ChromeDriver acts as a bridge between the Selenium client library and the Chrome browser by translating WebDriver protocol commands into browser-specific actions." 
+
+What are 5 possible reasons?
+
+Think like a troubleshooter.
+
+For example:
+
+Wrong locator
+Element not yet loaded
+Element inside an iframe
+Another element blocking the click
+Stale element reference
+
+
+Day 2 Agenda
+
+Today's session is going to be a little more challenging than yesterday.
+
+Module 1 (10 mins) – Revision
+
+I'll ask you questions from yesterday.
+
+Module 2 (45 mins) – Python Functions & OOP
+
+These are among the most frequently asked topics in automation interviews.
+
+Module 3 (20 mins) – Selenium Architecture Deep Dive
+
+We'll go beyond the basics and connect it to real project scenarios.
+
+Module 4 (20 mins) – Mock Interview
+
+I'll play the interviewer again.
+
+Module 5 (10 mins) – Feedback & Homework
+
+Question 1 --> Yesterday we discussed List, Tuple, Set and Dictionary.
+
+Tell me:
+
+Which of these are mutable?  -- List, Set and DICTIONARY
+Which are immutable?  -- Tuple
+Which allow duplicate values? -- List, Tuple, Dictionary
+Which one is the fastest for searching --> Set and DICTIONARY
+
+Question 2
+
+Explain the Selenium Architecture without looking at your notes.
+
+⭐ Senior-Level Interview Answer
+
+"When Selenium executes the statement driver.find_element(By.ID, 'username').click(), the first step is that the Selenium Python client library receives the request from the Python script.
+
+The Selenium client then creates an HTTP request following the W3C WebDriver Protocol and sends it to ChromeDriver.
+
+ChromeDriver acts as a bridge between Selenium and the Chrome browser. It translates the WebDriver command into browser-specific instructions that Chrome understands.
+
+Chrome searches the DOM for the element whose ID is username. If the element is found, Chrome returns an element reference back through ChromeDriver to the Selenium client.
+
+When the .click() method is executed, Selenium sends another WebDriver command to ChromeDriver, which again forwards it to Chrome. Chrome then performs the click action on that element."
+
+But a Senior Engineer should also explain what happens if the element is NOT found.
+
+For example:
+
+"If the element is not found, Selenium waits according to the configured wait strategy. If no matching element is found within the timeout period, it throws a NoSuchElementException."
+
+Question 3
+
+Imagine you're writing an automation framework.
+
+Where would you use:
+
+List  --> In Selenium automation, I typically use Lists to store multiple WebElements returned by the find_elements() method. This allows me to iterate through the elements for validation or interaction.
+ 
+Dictionary --> Storing the configuration , test data, or API response.
+
+Tuple -> For fixed value, Immutable configuration values
+
+Set --> To remove the duplicate content from the list, for uniqueness
+
+Follow Up Question --> 
+
+Why don't we use a List for everything? Why do Python developers still use Tuples, Sets, and Dictionaries?
+
+"Each Python collection serves a different purpose. I use a List when I need an ordered collection that may change during execution, such as storing multiple WebElements or test data. I use a Tuple for fixed configuration values because it's immutable. A Set is useful when uniqueness is important, for example validating that a menu doesn't contain duplicate items. A Dictionary is my preferred choice for configuration data, API responses, and test data because key-value access is fast and expressive. Choosing the right collection improves readability, maintainability, and performance where appropriate."
+
+
+Follow Up Question --> 
+
+If you were designing a Selenium framework from scratch today, where would you use Lists, Tuples, Sets, and Dictionaries?
+
+Not isolated examples.
+
+I want you to imagine the entire framework:
+
+Configuration  --> In python selenium projects, dictionaries used to save the configuration.
+Test Data --> Again Dictionaries
+WebElements --> List
+API Responses  --> Json format, will use dictionaries
+Reports --> Key -- Values ( Dictionarie )
+Environment Settings  --> Dictionarie
