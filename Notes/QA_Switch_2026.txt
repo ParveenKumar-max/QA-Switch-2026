@@ -1,6 +1,7 @@
 Senior Automation QA Engineer (Python | Selenium | Playwright | API | SQL | CI/CD)
 
-Core Automation
+Core Automation --> 
+
 Python
 Selenium
 Playwright
@@ -11,7 +12,8 @@ Logging
 Reporting
 Parallel execution
 
-API
+API --> 
+
 REST APIs
 Authentication
 JSON
@@ -19,21 +21,24 @@ Requests library
 Postman
 API automation
 
-SQL
+SQL --> 
+
 Joins
 Window Functions
 CTEs
 Stored Procedures (concepts)
 Query optimization basics
 
-DevOps Basics
+DevOps Basics --> 
+
 Git
 GitHub
 Jenkins
 Docker
 CI/CD pipelines
 
-AI in Testing
+AI in Testing  -- --> 
+
 
 This is increasingly important. We'll learn:
 
@@ -42,7 +47,9 @@ AI-assisted automation
 Prompting techniques for QA
 Where AI helps—and where manual validation is still needed
 
-Interview Readiness
+Interview Readiness --> 
+--> 
+
 
 You'll be prepared for questions like:
 
@@ -55,6 +62,10 @@ Explain your synchronization strategy.
 Design a framework from scratch.
 
 The goal isn't memorizing answers—it's understanding the concepts so you can respond naturally.
+
+--> ************************************************************************************************************************* --> 
+--> ************************************************************************************************************************* --> 
+--> ************************************************************************************************************************* --> 
 
 
 
