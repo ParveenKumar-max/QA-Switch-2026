@@ -1,7 +1,6 @@
 Senior Automation QA Engineer (Python | Selenium | Playwright | API | SQL | CI/CD)
 
-Core Automation --> 
-
+Core Automation
 Python
 Selenium
 Playwright
@@ -12,8 +11,7 @@ Logging
 Reporting
 Parallel execution
 
-API --> 
-
+API
 REST APIs
 Authentication
 JSON
@@ -21,24 +19,21 @@ Requests library
 Postman
 API automation
 
-SQL --> 
-
+SQL
 Joins
 Window Functions
 CTEs
 Stored Procedures (concepts)
 Query optimization basics
 
-DevOps Basics --> 
-
+DevOps Basics
 Git
 GitHub
 Jenkins
 Docker
 CI/CD pipelines
 
-AI in Testing  -- --> 
-
+AI in Testing
 
 This is increasingly important. We'll learn:
 
@@ -47,9 +42,7 @@ AI-assisted automation
 Prompting techniques for QA
 Where AI helps—and where manual validation is still needed
 
-Interview Readiness --> 
---> 
-
+Interview Readiness
 
 You'll be prepared for questions like:
 
@@ -62,10 +55,6 @@ Explain your synchronization strategy.
 Design a framework from scratch.
 
 The goal isn't memorizing answers—it's understanding the concepts so you can respond naturally.
-
---> ************************************************************************************************************************* --> 
---> ************************************************************************************************************************* --> 
---> ************************************************************************************************************************* --> 
 
 
 
@@ -248,3 +237,366 @@ WebElements --> List
 API Responses  --> Json format, will use dictionaries
 Reports --> Key -- Values ( Dictionarie )
 Environment Settings  --> Dictionarie
+
+
+Day 2 Agenda
+
+Let's begin with Question 1:
+
+What is a function in Python, and why do we use functions in an automation framework?
+
+⭐ How a Senior QA Engineer should answer
+
+A function is a reusable block of code designed to perform a specific task. Instead of writing the same logic multiple times, we create a function once and call it whenever needed. This improves code reusability, readability, and maintainability.
+
+Then explain why.
+
+In automation frameworks, functions help us avoid duplicate code. Common actions such as launching the browser, logging into the application, capturing screenshots, waiting for elements, and reading test data are implemented as reusable functions. This makes the framework easier to maintain and update.
+
+Why do we use Functions?
+
+Without function
+
+driver.find_element(By.ID,"username").send_keys("admin")
+driver.find_element(By.ID,"password").send_keys("admin123")
+driver.find_element(By.ID,"login").click()
+
+Now imagine...
+
+You have 250 test cases.
+
+Will you write these three lines 250 times?
+
+No.
+
+Instead,
+
+def login():
+    driver.find_element(By.ID,"username").send_keys("admin")
+    driver.find_element(By.ID,"password").send_keys("admin123")
+    driver.find_element(By.ID,"login").click()
+
+Now simply call
+
+login()
+
+Day 4 Agenda -->
+
+What is the difference between a Parameter and an Argument?
+
+In Selenium auotmation framework, paramter and arguments play a very important role. While creating the function, wedefine the parameter like username, password in any function, but while calling we can use it with different data set and can use it anywhere of the framework. No need to change the username and password again and again. With the help of parmater and argument, resusablity of code is very easy and you can mainin your project.
+
+⭐ Senior-Level Answer
+
+If I were interviewing you, I would love to hear something like this:
+
+Parameters are the variables declared in the function definition, whereas arguments are the actual values passed to those parameters when the function is called.
+
+Look at this code: 
+def login(username, password="Welcome@123"):
+ print(username, password)
+ 
+ What will be the output of:
+ 
+ login("Parveen") 
+ 
+ Will it throw an error? -- No, it won't throw an error
+ What will it print? -- Parveen Welcome@123
+ Why? -- Becasue while caliing the function we are passing the 1 arguments and 2 is already persent in the paramter, so there will be no error, it will run properly.
+ 
+ 🏆 Senior-Level Answer
+
+If I were interviewing you, an ideal answer would be:
+
+No, it will not throw an error because the password parameter has a default value. During the function call, only the username argument is provided. Since no value is passed for password, Python automatically assigns the default value Welcome@123. Therefore, the output will be: Parveen Welcome@123
+
+--> Increaing the difficulties
+
+def login(username="admin", password="Welcome@123"):
+    print(username, password)
+
+login("Parveen", "Test@123")
+Tell me:
+Output?  The output will be Parveen Test@123
+Why?  --> Becasue in the function we defined the default parameter, but in the arguments are calling the 2 arguments again, so it will override the value of existing one. Python assign the value that is using in the arguments, in case if we won't pass the value in the arguments then it will pick the by defualt value that is present in the parameter. 
+
+⭐ Small Improvement
+
+Instead of saying:
+
+"It will override the value."
+
+I would say:
+
+"The default values are only used when an argument is not provided. Since both arguments are passed during the function call, Python uses the supplied values instead of the defaults."
+
+def login(username="admin", password="Welcome@123"):
+    print(username, password)
+
+login(password="Secret@123")
+Tell me:
+What will be the output?  --> The output will be admin Secret@123
+Why?  --> Python first read the paramter that present in the funtion and stored it, but when python checks while calling we are adding only 1 argument of password, then it will use calling argument not we dfeined as defualt. So at last the ouput will be admin Secret@123
+
+⭐ Let's Make It Sound Like a Senior Engineer
+
+Imagine you're sitting in an interview at Microsoft.
+
+I would answer like this:
+
+Python matches arguments with parameters by name. In this example, only the password argument is passed using a keyword argument. Since no value is provided for username, Python automatically uses its default value 'admin'. Therefore, the output will be admin Secret@123.
+
+def login(username, password):
+    print(username, password)
+
+login(password="Welcome@123", username="Parveen")
+Tell me:
+Will it throw an error?   -- It wont thorw an error
+What will be the output?  --> The outout will be  Parveen Welcome@123
+Why?  --> Python check we passed two paramters in the function and while calling passed the 2 arguments but the sequence is changed. Python doedn't casre about the sequence it will check the values you passed in the paramter and the argument, it should be same. if its same it will add the argument to that parameter.
+
+🏆 Let's Make It Sound Like a Senior Engineer
+
+Imagine you're in an interview.
+
+I would answer like this:
+
+No, it will not throw an error because keyword arguments are matched by parameter name rather than by position. Although the arguments are passed in reverse order, Python maps username="Parveen" to the username parameter and password="Welcome@123" to the password parameter. Therefore, the output will be Parveen Welcome@123.
+
+Why do we use return instead of print in automation frameworks?  -->
+
+ In python auotmation frameworks, we can't work with return values, With the help of returns, you can call the function anywhere in the automation framework , and use the values. But print will show the putput everytime in the console.
+
+Senior-Level Interview Answer
+
+If an interviewer asks:
+
+Why do we use return instead of print in automation frameworks?
+
+A strong answer is:
+
+We use return because it sends a value back to the calling function, allowing us to reuse that value in assertions, validations, or other functions. In contrast, print() only displays the output on the console and cannot be used for further processing.
+
+For example, in my Selenium framework, methods such as get_page_title(), get_logged_in_user(), and get_error_message() return values so that test cases can validate the application behavior using assertions.
+
+def add(a, b):
+    print(a + b)
+
+result = add(10, 20)
+
+print(result)
+Tell me:
+What will be printed on the screen?  --> The correct answer is 30
+What is the value of result? -- result will print 30
+Why?  -- Pthyon function have 2 paramter and we print the value of it,and we create a varibale result call the funtion and pass two arguments, the value are not reurning anythng to the main funtion.
+ 
+ Python creates the function. After printing, the function reaches the end. There is no return statement, So Python automatically returns None , result = None 
+ 30
+None, result does not store the printed value. It stores the return value of the function.
+ 
+ 
+ Why is result equal to None and not 30?  -->  Becasue result doenn't have reurn value, so it will not reurn anything, print wont't store anything after printing the value. So if you print result, print has no value, it has only none. 
+ 
+ Let's Visualize It
+Case 1: Using print()
+ 
+def add(a, b):
+print(a + b)
+
+result = add(10, 20)
+ 
+What happens internally?
+
+ 
+add(10,20)
+
+↓
+
+print(30)
+
+↓
+
+Function Ends
+
+↓
+
+Python returns None automatically
+
+↓
+
+result = None
+ 
+
+Case 2: Using return
+ 
+def add(a, b):
+return a + b
+
+result = add(10,20)
+ 
+Internal Flow
+
+ 
+add(10,20)
+
+↓
+
+return 30
+
+↓
+
+result = 30
+ 
+See the difference?
+
+
+🔥 Real Selenium Framework Example
+Imagine your Page Object has this method:
+
+ 
+def get_user_name():
+return driver.find_element(By.ID, "user").text
+ 
+Your test case becomes:
+
+ 
+user = get_user_name()
+
+assert user == "Parveen"
+ 
+Now imagine you had written:
+
+ 
+def get_user_name():
+print(driver.find_element(By.ID, "user").text)
+ 
+Then:
+
+ 
+user = get_user_name()
+ 
+user becomes:
+
+ 
+None
+
+
+
+Day 5 Agenda --> 
+
+What is *args?
+
+Answer like this:
+
+*args allows a function to accept a variable number of positional arguments. Python stores these arguments as a tuple. It is useful when the number of inputs is not fixed. In automation frameworks, it can be used for validating multiple UI elements or processing dynamic sets of data.
+
+def fruits(*args):
+    print(args)
+
+fruits("Apple", "Mango", "Banana")
+What will be printed?  -- ('Apple', 'Mango', 'Banana')
+What is the type of args? --  Type is tuple, the value inside the tuple is string
+Why does Python use a tuple instead of a list? --> 
+
+🎤 Senior Interview Answer
+
+If I ask:
+
+Why is *args stored as a tuple instead of a list?
+
+A strong answer is:
+
+Python stores *args as a tuple because tuples are immutable. Function arguments are meant to represent the values passed by the caller, and immutability prevents accidental modification. Tuples are also slightly more memory-efficient than lists, making them a good choice for storing function arguments.
+
+def total(*args):
+    print(args)
+
+total()
+
+Tell me:
+
+1. Will it throw an error?  --> No, it will not throw any error. "Accept zero or more positional arguments."
+2. What will be printed?  -- it will print ()
+3. What is the value of args? --> args = ()
+4. Why? -- *args accepts any number of positional arguments, including zero. When no arguments are provided, Python creates an empty tuple (). Since the function simply prints args, the output is an empty tuple.
+
+Selenium Example 
+
+def validate_elements(*elements):
+    for element in elements:
+        print(element)
+
+validate_elements()
+
+Output ==> elements = ()
+
+def numbers(*args):
+    print(len(args))
+
+numbers(10, 20, 30, 40)
+Questions
+What is the output? --> 4
+Why? -->  Becasue *args returns type is tuple and while calling the funtion we use length so it will calaluctae the 4 varibale and print ( 4 )
+What is the value of args internally? --> args = len(10,20,30,40)
+
+Visual Difference
+*args
+def demo(*args):
+    print(args)
+
+demo(10,20,30)
+
+Python creates
+
+args = (10,20,30)
+
+Tuple
+
+**kwargs
+def demo(**kwargs):
+    print(kwargs)
+
+demo(name="Parveen", age=35)
+
+Python creates
+
+kwargs = {
+    "name":"Parveen",
+    "age":35
+}
+
+Dictionary
+
+def employee(**kwargs):
+    print(kwargs)
+
+employee(
+    name="Parveen",
+    company="Tech Mahindra",
+    experience=10
+)
+
+Answer these four questions:
+
+What will be printed?  --> {name = "Parveen", compnay ="Tech Mahindra", experience = 10}
+What is the type of kwargs? --> Dictionarie
+What are the keys in the dictionary?  --> name, company, experience
+What are the values in the dictionary?  --> Parveen. Tech Mahindra, 10
+
+def student(name, *subjects, **details):
+    print(name)
+    print(subjects)
+    print(details)
+
+student(
+    "Parveen",
+    "Python",
+    "Selenium",
+    company="Tech Mahindra",
+    experience=10
+)
+Answer these questions:
+What will name print?  --> As i can see, in the name, it will print "Parveen".
+What will subjects print? -->  Subject will print  = ("Parveen", "Python","Selenium")
+What will details print?  --> Details will print = { company:"Tech Mahindra",experience:10}
+Why is "Parveen" not stored inside subjects?  -> Becasue as per the python logic *args type is tuple, so first value assigned to name varibale, we can't change it, it assign to name varibale, next time we will call subject so it will pick Python and selenium.

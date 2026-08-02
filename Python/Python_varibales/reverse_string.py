@@ -14,6 +14,9 @@ for i in value:
     text = i + text
 print("The reversed value is :" , text)
 
+
+
+
 def reverse_string(String):
     text = ""
     for i in String:
