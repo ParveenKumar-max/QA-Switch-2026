@@ -600,3 +600,347 @@ What will name print?  --> As i can see, in the name, it will print "Parveen".
 What will subjects print? -->  Subject will print  = ("Parveen", "Python","Selenium")
 What will details print?  --> Details will print = { company:"Tech Mahindra",experience:10}
 Why is "Parveen" not stored inside subjects?  -> Becasue as per the python logic *args type is tuple, so first value assigned to name varibale, we can't change it, it assign to name varibale, next time we will call subject so it will pick Python and selenium.
+
+Day 6 AGenda -->  Class, Object Self and Constructor
+
+Question 1: Why do Selenium frameworks use classes instead of writing all functions in one file?
+
+We use classes because they help organize the automation framework in a structured and maintainable way. In a real project, each page contains many locators and methods. If all locators and functions are written in a single file, the code becomes difficult to read, debug, and maintain.
+
+In my Tech Mahindra project, we handled multiple applications with hundreds of test cases. We kept each page in a separate class, such as LoginPage, DashboardPage, and PaymentPage. This allowed us to encapsulate all locators and actions related to that page in one place.
+
+The main benefits are better readability, easier maintenance, code reusability, and reduced impact when changes happen on a specific page. For example, if a locator changes only on the Payment page, we update that class without affecting the rest of the framework.
+
+class LoginPage:
+
+    def login(self):
+        print("Login Successful")
+Tell me:
+
+What is self?  --> Self is the reefrence of the current object of the class. It allow us to use all method and varibales inside the class.
+Who passes the value to self? -> Python automatically passes the current object.
+Why don't we pass it manually while calling the method?  --> We don't pass self manually because Python automatically passes the current object when we call a method using an object. This makes the syntax cleaner and easier to use..
+
+class LoginPage:
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def login(self):
+        print(self.driver)
+
+page = LoginPage(driver)
+page.login()
+
+
+🎯 Question
+
+When is __init__() called?  -->  Constructor automatically invokes when we create the instance of that class.
+page = LoginPage(driver)  // The moment Python creates the object:
+It automatically executes:   __init__(self, driver)
+
+Who calls __init__()?  --> Python automatically calls the __init__() constructor whenever a new object of the class is created.
+ 
+Why do we write self.driver = driver instead of just driver = driver?   --> Python stores the value inside the object.ow every method inside the class can access it.
+
+
+How is this useful in a Selenium Page Object Model?  --> In selenium its very userful, no needto define driver again and again, we will define in our main and calls it anywhere in our framework.
+
+
+Which one is a class variable?  -- Code 1 is a class varibale because driver is a class variable because it is declared directly inside the class, outside any method. It is shared by all objects of that class unless overridden.
+
+Which one is an instance variable?  --> Code 2 is the instance varibale, becasue here we dfine the constructor, self is the reference of the current object of the class.
+
+self.driver is an instance variable because it belongs to a specific object (instance). Every object gets its own copy of self.driver.
+
+Day 7 AGenda --> 
+
+Which one would you use in a Selenium framework?  -->  Code 2, Professional Selenium frameworks use instance variables.
+Why? --> Becasue of readablity of the driver, we can define one time and use it anywhere in the main class.
+
+🎤 Interview Answer
+
+If an interviewer asks:
+
+Why do Selenium frameworks use instance variables instead of class variables for WebDriver?
+
+A strong answer would be:
+
+WebDriver should be stored as an instance variable because each page object should work with its own driver instance. Instance variables prevent unwanted sharing of state between objects, improve encapsulation, and support parallel test execution. Class variables are shared across all instances, which can lead to unexpected behavior in automation frameworks.
+
+
+class BasePage:
+
+    def click(self):
+        print("Click from BasePage")
+
+
+class LoginPage(BasePage):
+    pass
+
+
+page = LoginPage()
+
+page.click()
+Tell me:
+What will be the output  --> Click from BasePage
+Why can LoginPage call click() even though it doesn't define the method?  --> LoginPage inherits from BasePage, so it automatically gets access to all public methods and attributes of the parent class. Since click() is not found in LoginPage, Python looks in BasePage and executes that method.
+Where does Python search for the click() method first?  --> Becasue we created an object of login page. Object create the memorey of the class, first thing it will check the click method in the LoginPage class, then move to baseclass.
+
+Day 8 AGenda --> 
+
+class BasePage:
+
+    def click(self):
+        print("Click from BasePage")
+
+
+class LoginPage(BasePage):
+
+    def click(self):
+        print("Click from LoginPage")
+
+
+page = LoginPage()
+
+page.click()
+🎯 Tell me:
+What will be the output?  --> The Output will be Click from LoginPage
+Why doesn't Python execute BasePage.click()?  --> Python first searches for the method in the child class (LoginPage). Since click() is found there, it executes that method and stops searching. It does not continue to the parent class (BasePage).
+What is this concept called?  -> This is Method Overriding, which is a form of Runtime Polymorphism.
+In what Selenium scenario would you override a method like this? --> Capture screenshot, wait, select, browser login
+
+
+class BasePage:
+
+    def login(self):
+        print("Login from Base")
+
+class LoginPage(BasePage):
+	pass
+page = LoginPage()
+
+page.login()
+Questions
+What will be the output?  --> Login from Base
+Is this inheritance or overriding?  --> This is inheritence not overriding, 
+Why? -- overrding comes in the picture when child has same function name like parent class. Currently it's not overrding, it's inherting.
+What if LoginPage defines its own login() method? What concept would that demonstrate?  --> Then its the concept of overriding.
+
+
+🎯 Mentor's Assignment
+
+Let's check your understanding.
+
+Question 1
+
+What will be the output?
+
+class BasePage:
+
+    def open(self):
+        print("Base Page")
+
+
+class LoginPage(BasePage):
+
+    def open(self):
+        print("Login Page")
+
+
+page = LoginPage()
+page.open()
+
+Ouput --> Python first searches for the open() method in the child class (LoginPage). Since it finds the method there, it executes it and does not continue searching in the parent class (BasePage). This is Method Overriding."
+.
+Question 2
+
+Will this work in Python?
+
+class Demo:
+
+    def login(self):
+        print("Login 1")
+
+    def login(self, username):
+        print("Login 2")
+What will happen?   --> It will print the last value.
+Why? --> Python does not support true method overloading. If multiple methods have the same name, the last definition replaces the previous ones. To achieve similar behavior, we use default arguments, *args, or **kwargs.
+
+Now I want to ask you a company-level interview question.
+
+Suppose I ask:
+
+class Calculator:
+
+    def add(self, *args):
+        return sum(args)
+
+Question:
+
+Why did the developer use *args instead of writing: In Python why we use *args, where we can add more than one arguments while creating the object of the class.
+
+def add(self, a, b):
+
+What problem is *args solving?  --> For now, we have sum of 2 argument like a , b but in future we know it will incerase to z, we can't change our method everyehere so for that we will use *args and pass the argument when calling the function. It will help us to increase the readability pf the framework.
+
+We use *args when the number of inputs is not fixed. Instead of modifying the function signature every time the requirement changes, *args allows the method to accept any number of positional arguments. This makes the code more flexible, reusable, and easier to maintain. In automation frameworks, this is useful when utility methods need to handle varying numbers of values without requiring code changes.
+
+********"Why is Page Object Model (POM) considered one of the best design patterns for Selenium automation?"
+
+Okay, the answer is why we follow the design patern, In POM, we folow OOPS concept, like we every pages have its own classes where we define the methods like clicklogin, username, password. So that we hide the internal implementation of methods inside the class. Ither classes don't know how its works. Same we we create a base class, where we define the common methods, calls it main funtion.
+
+Agenda 9 --> Today's Learning Plan
+
+We'll cover:
+
+✅ What is PyTest?
+✅ Why companies prefer PyTest over unittest
+✅ Test Discovery
+✅ Assertions
+✅ Basic Project Structure
+⏳ Fixtures (Tomorrow - Deep Dive)
+⏳ conftest.py
+⏳ Parametrization
+⏳ pytest.ini
+
+What is Pytest --> Pytest is an Python testing framework that used for writing, execute, manage, organize and report the test cases efficencly. With the help of pytest, we can use or help or support Fixtures, Parametrizates, assertion, support diferent plugins, integrates with selenium and CI/CD pipelines
+
+login.py
+
+test_login.py
+
+payment.py
+
+test_payment.py
+
+dashboard_test.py
+
+test_dashboard.py
+Questions
+Which files will PyTest automatically discover?  - test_login, test_payment, test_dashboard, dashboard_test
+
+Why? PyTest follows naming conventions during test discovery. By default, it searches for files named test_*.py and *_test.py. This allows it to automatically discover and execute test cases without manually specifying each file.
+
+Why do companies follow these naming conventions instead of naming files however they like? --> Companies have large and huge applications where we have 5000 automation test scripts. if there is no naming concentiion, how pyTest know which files contain tests? It can't.
+
+Instead, everyone follows the same naming convention. Now PyTest automatically finds every test.
+
+What is ASSERTION ?
+Before I explain assertions, I have one simple question.
+
+Suppose your Selenium script is:
+driver.find_element(By.ID, "username").send_keys("Parveen")
+driver.find_element(By.ID, "password").send_keys("Test@123")
+driver.find_element(By.ID, "login").click()
+
+After clicking Login, how does PyTest know whether the test passed or failed?  --> "PyTest will execute the script successfully, but since there is no assertion or validation, it cannot verify whether the login actually succeeded. Therefore, the test may pass simply because no exception occurred."
+
+Pytest Vs Unittest
+
+Pytest and Unittest are two widely used Python testing frameworks for writing and executing automated tests. Both help developers improve software quality, detect bugs early, and maintain reliable applications.
+
+Pytest is known for its simple syntax, flexibility, and powerful features.
+Unittest provides a structured, class-based testing approach and is included in Python’s standard library.
+
+What is PyTest?  --> Pytest is a python testing framework that allows us to write , manage, execute and report the test casese efficencly. Pytest also provide very good support like fixtures, paramterize, assertion, test discovery, strong plugin support, third party library, intergrated with selenium and CI/CD pipelines.
+
+Why do we use assertions?  --> Assertions are used to validate that the actual application behavior matches the expected behavior. Without assertions, PyTest can only confirm that the script executed without errors—it cannot confirm that the application's functionality is correct. Assertions are what determine whether a test case truly passes or fails from a business perspective.
+
+Suppose you wrote:
+
+driver.find_element(By.ID,"login").click()
+
+No assertion.
+
+Will PyTest always know whether login is successful?  --> No, if you didn't add the assertion, pytest don't know whether it's fail or pass.
+
+Why? -->  if you didn't add the assertion, pytest don't know whether it's fail or pass.
+
+Suppose an interviewer asks:
+Can Selenium work without PyTest?  → Yes. Selenium can work without PyTest because it is a standalone browser automation library. We can execute Selenium scripts directly using Python. However, in enterprise automation frameworks, Selenium is usually integrated with PyTest because PyTest provides test execution, assertions, fixtures, reporting, and better framework management.
+And another question: 
+Can PyTest work without Selenium? --> Yes pytest work without selenium, selenium integrates in pytest so pytest don't need persmission to selenium for executing the script.
+Think carefully before answering.
+
+DAY 10 --> 
+
+What is a PyTest fixture, and why do we use it in Selenium automation?
+
+Don't give me the textbook definition.
+
+Explain it in your own words, including:
+
+What problem does it solve?  --> Fixture solve the code duplicate and helps to manage the framework.
+What does it provide to the test?  --> It will provide the strong support of setup and tear down the script. We added in one file and for 100 test script we can use.
+What happens before and after the test? --> Before, if we are importing pytest and selenium library in out file. and use fixtures, it  will pick the test and perform the action, after that yield will play a importatn role. After performing the action, it will to yield, yield handed over to test. When test finishes, it will execute the driver.quit() function to close method.
+
+"A PyTest fixture is a reusable mechanism used to provide common resources and handle setup and teardown for test cases. 
+
+In Selenium automation, we commonly use fixtures to create and configure the WebDriver before a test and close the browser
+ after the test. This avoids duplicating browser setup and teardown code across hundreds of test cases and makes the framework easier to maintain.
+ With yield, we can provide the WebDriver to the test, and once the test finishes, PyTest resumes execution after yield to perform the cleanup."
+ 
+ Challenge — yield vs return. Now we're going one level deeper. Consider:
+Version A
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+Version B
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    return driver
+    driver.quit()
+🎯 Question
+What is the problem with Version B?
+And more importantly:
+Why is yield preferred over return when we need both setup and teardown in a PyTest fixture?
+In Pytest framework, yield play a very important role, In pytest, once we open the browser, it will execute all the scripts present or writtien in test file and yield.driver has the responsibility to verify the that all scripts are executed, once its done it will send webdriver to driver.quit function. Why we can't use return method becasue return vlaue didn't very the scripts, it will get the value and before executing the all test scripts it will quit the browser.  
+
+
+Absolutely. Since we've just completed yield vs return, today's agenda should continue naturally into PyTest fixture architecture rather than jumping to a completely new area.
+
+🚀 QA Switch 2026 — Today's Agenda
+1️⃣ Quick Revision — 10 min
+
+We'll quickly test your understanding of:
+PyTest is a Python testing framework used to write, organize, execute, and validate test cases efficiently. It provides features suchas fixtures, parametrization, assertions, test discovery, plugins, and integration with Selenium and CI/CD pipelines.
+
+Test discovery  --> PyTest has built-in test discovery that automatically identifies test files and test functions based on naming conventions and executes the discovered tests.
+
+Selenium vs PyTest  --> Selenium automates browser interactions, while PyTest manages test execution, validation, fixtures, discovery, and reporting.
+
+Fixtures --> Fixtures is used for setup and teardown the function, Fixture provide us the resubale mechanism for all the test scripts.
+
+yield vs return --> Give the resource to the test, pause the fixture, and resume after the test finishes so teardown can execute."
+"Return the value and terminate the function."
+No long explanations—just
+
+🟢 Module 4: What is fixtures Scope ?
+
+🎯 Interview question for you
+
+Suppose we have:
+
+@pytest.fixture(scope="function")
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+and:
+
+def test_login(driver):
+    pass
+
+def test_payment(driver):
+    pass
+How many Chrome browser instances will PyTest create?
+
+A) 1
+B) 2
+C) 100
+D) Depends on the number of fixtures--> The answer is 2
